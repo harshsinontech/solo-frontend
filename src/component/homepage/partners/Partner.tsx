@@ -1,70 +1,63 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import React from "react";
+import { Container } from "react-bootstrap";
 import Slider from "react-slick";
-import { PartnerLogo } from '../../../assets/images';
+import { PartnerLogo } from "../../../assets/images";
+import useScrollAnimation from "../../../../useScrollAnimation";
+import { useTranslation } from "react-i18next";
 
-const Partner = () => {
-    var settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        centerMode:true,
-        margin:"20px",
-        slidesToShow: 5,
-        slidesToScroll: 1
-    };
-    return (
-        <section className='partner'>
-            <Container>
-                <h2>Our Partners</h2>
-                <p>A Success career must have a trusted partners to help you though the journey</p>
-            </Container>
-            <div className='slider-patner'>
-                <Slider {...settings}>
-                    <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                     <div>
-                        <div className='partner-image-box'>
-                            <img src={PartnerLogo} alt='partner' />
-                        </div>
-                    </div>
-                </Slider>
+const Partner: React.FC = () => {
+  const [partnerRef, isVisible] = useScrollAnimation<HTMLDivElement>();
+  const { t } = useTranslation();
+
+  const partnerLogos = [
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+    PartnerLogo,
+  ];
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    centerMode: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1199, settings: { slidesToShow: 4 } },
+      { breakpoint: 991, settings: { slidesToShow: 3 } },
+      { breakpoint: 767, settings: { slidesToShow: 2 } },
+      { breakpoint: 575, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  return (
+    <section
+      ref={partnerRef}
+      className={`partner fade-up ${isVisible ? "visible" : ""}`}
+    >
+      <Container>
+        <h2>{t("partner.title")}</h2>
+        <p>{t("partner.description")}</p>
+      </Container>
+      <div className="slider-partner">
+        <Slider {...settings}>
+          {partnerLogos.map((logo, index) => (
+            <div key={index}>
+              <div className="partner-image-box">
+                <img src={logo} alt={`partner-${index}`} />
+              </div>
             </div>
-        </section>
-    )
-}
+          ))}
+        </Slider>
+      </div>
+    </section>
+  );
+};
 
-export default Partner
+export default Partner;

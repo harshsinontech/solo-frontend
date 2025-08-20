@@ -1,55 +1,62 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
-import {  Feauture, FeautureThree, FeautureTwo } from '../../../assets/images';
+import useScrollAnimation from "../../../../useScrollAnimation";
+import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import type { AppDispatch, RootState } from "../../../redux/store";
+import { fetchFeatures } from "../../../redux/slice/featureSlice";
 
+const Feature: React.FC = () => {
+  const [key, setKey] = useState<string>("create");
+  const [featureRef, isVisible] = useScrollAnimation<HTMLDivElement>();
+  const { i18n } = useTranslation();
 
-function Feature() {
-    const [key, setKey] = useState<string>('create');
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: features, loading, error } = useSelector(
+    (state: RootState) => state.features
+  );
 
-    return (
-        <div className='feuture'>
-            <Container className='position-relative'>
-                <Tabs
-                    id="controlled-tab-example"
-                    activeKey={key}
-                    onSelect={(k) => setKey(k as string)}
-                    className="mb-3"
-                >
-                    <Tab eventKey="create" title="We Create">
-                        <div className='feauture-content '>
-                            <div className='future-image'>
-                                <img src={Feauture} alt='tabbing-image' />
-                            </div>
-                            <div className='future-info'>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                            </div>
-                        </div>
-                    </Tab>
-                    <Tab eventKey="inspire" title="We Inspire">
-                        <div className='feauture-content'>
-                            <div className='future-image'>
-                                <img src={FeautureTwo} alt='tabbing-image' />
-                            </div>
-                            <div className='future-info'>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                            </div>
-                        </div>
-                    </Tab>
-                    <Tab eventKey="deliver" title="We Deliver">
-                        <div className='feauture-content'>
-                            <div className='future-image'>
-                                <img src={FeautureThree} alt='tabbing-image' />
-                            </div>
-                            <div className='future-info'>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                            </div>
-                        </div>
-                    </Tab>
-                </Tabs>
-            </Container>
-        </div>
+  useEffect(() => {
+    dispatch(fetchFeatures());
+  }, [dispatch]);
 
-    );
-}
+  if (loading) return <p className="text-center">Loading features...</p>;
+  if (error) return <p className="text-center text-danger">{error}</p>;
+  if (!features.length) return <p className="text-center">No features available</p>;
+
+  return (
+    <div
+      ref={featureRef}
+      className={`feuture fade-up ${isVisible ? "visible" : ""}`}
+    >
+      <Container className="position-relative">
+        <Tabs
+          id="controlled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k as string)}
+          className="mb-3"
+        >
+          {features.map((tab) => {
+            const title = i18n.language === "ar" ? tab.title_ar : tab.title_en;
+            const text = i18n.language === "ar" ? tab.text_ar : tab.text_en;
+
+            return (
+              <Tab eventKey={tab.tab_key} title={title} key={tab.id}>
+                <div className="feauture-content">
+                  <div className="future-image">
+                    <img src={tab.image_url} alt={title} />
+                  </div>
+                  <div className="future-info">
+                    <p>{text}</p>
+                  </div>
+                </div>
+              </Tab>
+            );
+          })}
+        </Tabs>
+      </Container>
+    </div>
+  );
+};
 
 export default Feature;

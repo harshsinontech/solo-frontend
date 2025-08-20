@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-function useScrollAnimation<T extends HTMLElement>(threshold: number = 0.3): [RefObject<T>, boolean] {
-  const elementRef = useRef<T>(null);
+function useScrollAnimation<T extends HTMLElement>(
+  threshold: number = 0.3
+): [RefObject<T | null>, boolean] {
+  const elementRef = useRef<T | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -12,10 +14,10 @@ function useScrollAnimation<T extends HTMLElement>(threshold: number = 0.3): [Re
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(entry.target); 
+          observer.unobserve(entry.target); // stops observing once visible
         }
       },
-      { threshold, rootMargin: "0px 0px -10% 0px" } 
+      { threshold, rootMargin: "0px 0px -10% 0px" }
     );
 
     observer.observe(node);
