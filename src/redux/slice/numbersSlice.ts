@@ -30,7 +30,7 @@ const numbersSlice = createSlice({
       })
       .addCase(fetchNumbers.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(fetchNumbers.rejected, (state, action) => {
         state.loading = false;
