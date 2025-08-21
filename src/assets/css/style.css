@@ -194,11 +194,6 @@ body {
 .banner-btn:hover .arrow-btn {
   opacity: 1;
 }
-.btn-teal-two {
-  background-color: var(--background-teal);
-  color: var(--text-color);
-  font-family: var(--font-family);
-}
 .banner .slick-dots {
   position: absolute;
   transform: translateY(-50%);
@@ -238,15 +233,15 @@ body {
   width: 17px;
   border-radius: 50%;
 } /* fueture */
-.feuture {
+.feature {
   padding: 100px 0;
 }
-.feuture li.nav-item .nav-link {
+.feature li.nav-item .nav-link {
   background: transparent;
   border: 0;
   position: relative;
 }
-.feuture li.nav-item .nav-link.active:before {
+.feature li.nav-item .nav-link.active:before {
   content: "";
   position: absolute;
   background: url(../images/shape-2.webp);
@@ -257,7 +252,7 @@ body {
   top: 3px;
   z-index: -1;
 }
-.feuture li.nav-item .nav-link {
+.feature li.nav-item .nav-link {
   background: transparent;
   border: 0;
   position: relative;
@@ -271,10 +266,10 @@ body {
   line-height: 35px;
   font-size: 20px;
 }
-.feuture li.nav-item .nav-link.active {
+.feature li.nav-item .nav-link.active {
   color: #fff;
 }
-.feuture li.nav-item .nav-link.active::after {
+.feature li.nav-item .nav-link.active::after {
   width: 200px;
   background: #2ea19b;
   content: "";
@@ -291,13 +286,13 @@ body {
   margin-top: -72px;
   position: relative;
 }
-.feuture ul {
+.feature ul {
   position: relative;
   z-index: 1;
   margin: 0;
   border: 0;
 }
-.feuture li.nav-item {
+.feature li.nav-item {
   position: relative;
   z-index: 11;
 }
@@ -329,7 +324,8 @@ body {
   height: 200px;
   bottom: 0;
   border-radius: 50px;
-} /* counter */
+} 
+/* counter */
 .number-title h2 {
   font-size: 170px;
   width: 50%;
@@ -449,9 +445,11 @@ body {
 }
 .team-title {
   position: absolute;
-  transform-origin: center;
-  white-space: nowrap;
+  bottom: 15px;      
   z-index: 1;
+  writing-mode: vertical-rl; 
+  white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .team-slider .slick-dots {
@@ -489,7 +487,8 @@ body {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
-} /* Partner Section */
+}
+ /* Partner Section */
 .partner {
   padding: 0 0 100px;
 }
@@ -515,6 +514,7 @@ body {
   margin: auto;
   top: 50%;
   transform: translateY(-50%);
+  height: 100%;
 }
 .partner-image-box {
   width: 90%;
@@ -522,6 +522,7 @@ body {
   height: 130px;
   border-radius: 20px;
   position: relative;
+  padding: 10px;
 } /* Footer */
 .footer {
   background: #fff;
@@ -616,7 +617,8 @@ body {
   font-size: 20px;
   color: #000;
   display: block;
-} /*======animation======*/
+} 
+/*======animation======*/
 @keyframes fadeInRight {
   from {
     opacity: 0;
@@ -656,7 +658,8 @@ body {
     opacity: 1;
     transform: none;
   }
-} /* Start hidden */
+} 
+
 .fade-right,
 .fade-left,
 .fade-up,
@@ -665,15 +668,19 @@ body {
 }
 .fade-right.visible {
   animation: fadeInRight 0.8s ease-out forwards;
+  opacity: 1;
 }
 .fade-left.visible {
   animation: fadeInLeft 0.8s ease-out forwards;
+  opacity: 1;
 }
 .fade-up.visible {
   animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 1;
 }
 .fade-bottom.visible {
   animation: fadeInDown 0.8s ease-out forwards;
+  opacity: 1;
 }
 .fade-right.visible,
 .fade-left.visible,

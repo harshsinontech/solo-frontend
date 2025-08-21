@@ -1,34 +1,33 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFeatures } from "../../../redux/slice/featureSlice";
+import type { AppDispatch, RootState } from "../../../redux/store";
 import useScrollAnimation from "../../../../useScrollAnimation";
 import { useTranslation } from "react-i18next";
-import { useSelector, useDispatch } from "react-redux";
-import type { AppDispatch, RootState } from "../../../redux/store";
-import { fetchFeatures } from "../../../redux/slice/featureSlice";
 
-const Feature: React.FC = () => {
-  const [key, setKey] = useState<string>("create");
-  const [featureRef, isVisible] = useScrollAnimation<HTMLDivElement>();
-  const { i18n } = useTranslation();
-
+function Feature() {
   const dispatch = useDispatch<AppDispatch>();
-  const { data: features, loading, error } = useSelector(
+  const { data, loading, error } = useSelector(
     (state: RootState) => state.features
   );
+  const [key, setKey] = useState<string>("0");
+
+  const [ref, isVisible] = useScrollAnimation<HTMLDivElement>();
+
+  const { i18n } = useTranslation();
+  const currentLang = i18n.language;
 
   useEffect(() => {
     dispatch(fetchFeatures());
   }, [dispatch]);
 
-  if (loading) return <p className="text-center">Loading features...</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-center text-danger">{error}</p>;
-  if (!features.length) return <p className="text-center">No features available</p>;
 
   return (
-    <div
-      ref={featureRef}
-      className={`feuture fade-up ${isVisible ? "visible" : ""}`}
-    >
+    // <div ref={ref} className={`feature fade-up ${isVisible ? "visible" : ""}`}>
+    <div className="feature">
       <Container className="position-relative">
         <Tabs
           id="controlled-tab-example"
@@ -36,18 +35,22 @@ const Feature: React.FC = () => {
           onSelect={(k) => setKey(k as string)}
           className="mb-3"
         >
-          {features.map((tab) => {
-            const title = i18n.language === "ar" ? tab.title_ar : tab.title_en;
-            const text = i18n.language === "ar" ? tab.text_ar : tab.text_en;
+          {data.map((feature, index) => {
+            const title =
+              currentLang === "ar" ? feature.title_ar : feature.title_en;
+            const subTitle =
+              currentLang === "ar"
+                ? feature.sub_title_ar
+                : feature.sub_title_en;
 
             return (
-              <Tab eventKey={tab.tab_key} title={title} key={tab.id}>
+              <Tab key={feature.id} eventKey={String(index)} title={title}>
                 <div className="feauture-content">
                   <div className="future-image">
-                    <img src={tab.image_url} alt={title} />
+                    <img src={feature.images_url} alt={title} />
                   </div>
                   <div className="future-info">
-                    <p>{text}</p>
+                    <p>{subTitle}</p>
                   </div>
                 </div>
               </Tab>
@@ -57,6 +60,6 @@ const Feature: React.FC = () => {
       </Container>
     </div>
   );
-};
+}
 
 export default Feature;

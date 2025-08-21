@@ -14,7 +14,7 @@ function useScrollAnimation<T extends HTMLElement>(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(entry.target); // stops observing once visible
+          observer.unobserve(entry.target);
         }
       },
       { threshold, rootMargin: "0px 0px -10% 0px" }

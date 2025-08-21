@@ -1,24 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Slider from "react-slick";
-import { PartnerLogo } from "../../../assets/images";
 import useScrollAnimation from "../../../../useScrollAnimation";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPartners } from "../../../redux/slice/partnersSlice";
+import type { AppDispatch, RootState } from "../../../redux/store";
 
 const Partner: React.FC = () => {
   const [partnerRef, isVisible] = useScrollAnimation<HTMLDivElement>();
   const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: partners, loading } = useSelector((state: RootState) => state.partners);
 
-  const partnerLogos = [
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-    PartnerLogo,
-  ];
+  useEffect(() => {
+    dispatch(fetchPartners());
+  }, [dispatch]);
 
   var settings = {
     dots: false,
@@ -45,16 +42,25 @@ const Partner: React.FC = () => {
         <h2>{t("partner.title")}</h2>
         <p>{t("partner.description")}</p>
       </Container>
+
       <div className="slider-partner">
-        <Slider {...settings}>
-          {partnerLogos.map((logo, index) => (
-            <div key={index}>
-              <div className="partner-image-box">
-                <img src={logo} alt={`partner-${index}`} />
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <Slider {...settings}>
+            {partners.map((partner) => (
+              <div key={partner.id}>
+                <div className="partner-image-box">
+                  <img
+                    src={partner.images_url}
+                    alt={partner.name_en}
+                    
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        )}
       </div>
     </section>
   );

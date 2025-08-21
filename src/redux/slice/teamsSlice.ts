@@ -3,11 +3,20 @@ import { axiosAPIInstace } from "../../utils/axiosInstance";
 
 export const fetchTeams = createAsyncThunk("teams/fetch", async () => {
   const response = await axiosAPIInstace.get("/teams");
-  return response.data;
+  return response.data.data; 
 });
 
+interface Team {
+  id: number;
+  name_en: string;
+  name_ar: string;
+  job_title_en: string;
+  job_title_ar: string;
+  images_url: string;
+}
+
 interface TeamsState {
-  data: any[];
+  data: Team[];
   loading: boolean;
   error: string | null;
 }

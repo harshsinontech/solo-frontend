@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Slider from "react-slick";
-import { TeamOne, TeamThree, TeamTwo } from "../../../assets/images";
 import { Link } from "react-router-dom";
 import useScrollAnimation from "../../../../useScrollAnimation";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTeams } from "../../../redux/slice/teamsSlice";
+import type { RootState, AppDispatch } from "../../../redux/store";
+import teamImage from "../../../assets/images/team-3.webp";
 
 const Team: React.FC = () => {
   const [teamRef, isVisible] = useScrollAnimation<HTMLDivElement>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { data: teams, loading } = useSelector(
+    (state: RootState) => state.teams
+  );
+
+  useEffect(() => {
+    dispatch(fetchTeams());
+  }, [dispatch]);
+
+  const lang = i18n.language;
 
   var settings = {
     dots: true,
@@ -16,7 +29,6 @@ const Team: React.FC = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
-    margin: 50,
     slidesToScroll: 1,
     responsive: [
       {
@@ -30,12 +42,6 @@ const Team: React.FC = () => {
     ],
   };
 
-  // Load member data from translations
-  const teamData = t("team_sec.members", { returnObjects: true }) as {
-    name: string;
-    title: string;
-  }[];
-
   return (
     <section
       ref={teamRef}
@@ -48,7 +54,9 @@ const Team: React.FC = () => {
               <h3>{t("team_sec.title")}</h3>
               <p>{t("team_sec.description")}</p>
               <Link to="#" className="banner-btn">
-                <Button className="btn btn-teal">{t("team_sec.allTeam")}</Button>
+                <Button className="btn btn-teal">
+                  {t("team_sec.allTeam")}
+                </Button>
                 <span className="arrow-btn">
                   <i className="bi bi-arrow-right"></i>
                 </span>
@@ -57,31 +65,37 @@ const Team: React.FC = () => {
           </Col>
 
           <Col className="col-md-8 col-lg-6">
-            <Slider {...settings} className="team-slider">
-              {teamData.map((member, index) => (
-                <div key={index}>
-                  <div className="team-content">
-                    <div className="team-image">
-                      <img
-                        src={[TeamOne, TeamTwo, TeamThree][index]}
-                        alt="team"
-                      />
-                    </div>
-                    <div className="team-title">
-                      <h4>
-                        <span>{member.name} -</span> {member.title}
-                      </h4>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <Slider {...settings} className="team-slider">
+                {teams.map((member) => (
+                  <div key={member.id}>
+                    <div className="team-content">
+                      <div className="team-image">
+                        <img src={member.images_url} alt={member.name_en} />
+                      </div>
+                      <div className="team-title">
+                        <h4>
+                          <span>
+                            {lang === "ar" ? member.name_ar : member.name_en} -
+                          </span>{" "}
+                          {lang === "ar"
+                            ? member.job_title_ar
+                            : member.job_title_en}
+                        </h4>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </Slider>
+                ))}
+              </Slider>
+            )}
           </Col>
 
           <Col className="col-md-4 col-lg-3">
             <div className="team-content team-join">
               <div className="team-image">
-                <img src={TeamThree} alt="team" />
+                <img src={teamImage} alt="Join us" />
               </div>
               <div className="team-title">
                 <h4>
@@ -89,7 +103,9 @@ const Team: React.FC = () => {
                 </h4>
               </div>
               <div className="apply-btn">
-                <Button className="btn btn-teal">{t("team_sec.applyNow")}</Button>
+                <Button className="btn btn-teal">
+                  {t("team_sec.applyNow")}
+                </Button>
               </div>
             </div>
           </Col>

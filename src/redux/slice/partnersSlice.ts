@@ -30,7 +30,7 @@ const partnersSlice = createSlice({
       })
       .addCase(fetchPartners.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(fetchPartners.rejected, (state, action) => {
         state.loading = false;

@@ -20,10 +20,10 @@ body {
   left: auto;
   bottom: auto;
 }
-.future-info{
+.future-info {
   left: 100px;
 }
-.feuture li.nav-item .nav-link.active:before {
+.feature li.nav-item .nav-link.active:before {
   left: 0;
 }
 .box-number h3,
@@ -37,15 +37,9 @@ body {
   padding-left: 40px;
 }
 .team-title {
-    bottom: 20%;
-    left: -55px;
-    transform: rotate(-90deg);
-}
-.team-join .team-title {
-  bottom: 7px;
-  left: 23px;
-  transform: rotate(-90deg);
-  transform-origin: left;
+  left: 10px;   
+  transform: rotate(180deg);
+
 }
 .team-slider .slick-dots {
   text-align: left;
@@ -61,6 +55,17 @@ body {
   right: 0;
   transform: scaleY(-1.6);
 }
-.nav-item .dropdown-toggle::after{
-    margin-left: .255em;
+.nav-item .dropdown-toggle::after {
+  margin-left: 0.255em;
+}
+@media(max-width:1199px){
+  .future-info {
+    left: 50px;
+    bottom: 50px;
+  }
+}
+@media(max-width:575px){
+  .future-info {
+    left: 30px;
+  }
 }

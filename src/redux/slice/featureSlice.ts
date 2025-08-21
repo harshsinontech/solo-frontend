@@ -8,12 +8,11 @@ export const fetchFeatures = createAsyncThunk("features/fetch", async () => {
 
 interface FeatureItem {
   id: number;
-  tab_key: string;
   title_en: string;
   title_ar: string;
-  text_en: string;
-  text_ar: string;
-  image_url: string;
+  sub_title_en: string;
+  sub_title_ar: string;
+  images_url: string;
 }
 
 interface FeatureState {
