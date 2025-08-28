@@ -13,7 +13,7 @@ const Dream: React.FC = () => {
       className={`dream fade-up ${isVisible ? "visible" : ""}`}
     >
       <div className="dream-image">
-        <img src={Dreams} alt={t("dream.title")} />
+        <img src={Dreams} alt={t("dream.title")} loading="lazy"/>
       </div>
       <div className="dream-text">
         <h3>{t("dream.title")}</h3>

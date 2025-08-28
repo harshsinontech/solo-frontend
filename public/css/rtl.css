@@ -79,6 +79,7 @@ body {
 .banner-btn {
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
 }
 .team-title {
   right: 10px;

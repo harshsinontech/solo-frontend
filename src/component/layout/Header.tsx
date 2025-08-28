@@ -66,7 +66,7 @@ const Header: React.FC = () => {
         >
           <Container>
             <Navbar.Brand href="/">
-              <img src={Logo} alt="Logo" />
+              <img src={Logo} alt="Logo" loading="lazy" />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Link to="/">{t("home")}</Link>
                   <Link to="#">{t("services")}</Link>
-                  <NavDropdown title={t("more")} id="nav-dropdown">
+                  <NavDropdown title={t("more")} id="nav-dropdown" className="language-dropdown">
                     <NavDropdown.Item href="#">{t("team")}</NavDropdown.Item>
                     <NavDropdown.Item href="#">{t("careers")}</NavDropdown.Item>
                   </NavDropdown>

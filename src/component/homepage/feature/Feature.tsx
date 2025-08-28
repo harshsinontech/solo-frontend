@@ -13,7 +13,8 @@ function Feature() {
   );
   const [key, setKey] = useState<string>("0");
 
-  const [ref, isVisible] = useScrollAnimation<HTMLDivElement>();
+  const [refFeature, isVisible] = useScrollAnimation<HTMLDivElement>();
+  console.log(isVisible,'isVisible');
 
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
@@ -26,8 +27,7 @@ function Feature() {
   if (error) return <p className="text-center text-danger">{error}</p>;
 
   return (
-    // <div ref={ref} className={`feature fade-up ${isVisible ? "visible" : ""}`}>
-    <div className="feature">
+    <div ref={refFeature} className={`feature fade-up ${isVisible ? "visible" : ""}`}>
       <Container className="position-relative">
         <Tabs
           id="controlled-tab-example"
@@ -47,7 +47,7 @@ function Feature() {
               <Tab key={feature.id} eventKey={String(index)} title={title}>
                 <div className="feauture-content">
                   <div className="future-image">
-                    <img src={feature.images_url} alt={title} />
+                    <img src={feature.images_url} alt={title} loading="lazy" />
                   </div>
                   <div className="future-info">
                     <p>{subTitle}</p>

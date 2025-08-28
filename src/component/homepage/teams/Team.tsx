@@ -73,7 +73,7 @@ const Team: React.FC = () => {
                   <div key={member.id}>
                     <div className="team-content">
                       <div className="team-image">
-                        <img src={member.images_url} alt={member.name_en} />
+                        <img src={member.images_url} alt={member.name_en} loading="lazy" />
                       </div>
                       <div className="team-title">
                         <h4>
@@ -95,7 +95,7 @@ const Team: React.FC = () => {
           <Col className="col-md-4 col-lg-3">
             <div className="team-content team-join">
               <div className="team-image">
-                <img src={teamImage} alt="Join us" />
+                <img src={teamImage} alt="Join us" loading="lazy"/>
               </div>
               <div className="team-title">
                 <h4>

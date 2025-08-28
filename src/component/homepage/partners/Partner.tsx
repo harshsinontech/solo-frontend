@@ -54,7 +54,7 @@ const Partner: React.FC = () => {
                   <img
                     src={partner.images_url}
                     alt={partner.name_en}
-                    
+                    loading="lazy"
                   />
                 </div>
               </div>

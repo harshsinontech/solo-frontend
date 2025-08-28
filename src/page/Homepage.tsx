@@ -9,12 +9,12 @@ import Partner from '../component/homepage/partners/Partner'
 const Homepage: React.FC = () => {
   return (
     <div>
-       <Banner />
+       {/* <Banner /> */}
        <Feature />
-       <Number />
+       {/* <Number />
        <Dream />
        <Team />
-       <Partner />
+       <Partner /> */}
     </div>
   )
 }

@@ -29,6 +29,7 @@ const Banner: React.FC = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    lazyLoad: "ondemand" as "ondemand",
     rtl: i18n.language === "ar",
     beforeChange: (_current: number, next: number) => {
       setActiveIndex(next);
@@ -46,7 +47,7 @@ const Banner: React.FC = () => {
             <div key={slide.id}>
               <div className="banner-content">
                 <div className="banner-image">
-                  <Image src={slide.images_url} alt={slide.title_en} fluid />
+                  <Image src={slide.images_url} alt={slide.title_en} fluid loading="lazy" />
                 </div>
                 <Container>
                   <div className="banner-text-info">
